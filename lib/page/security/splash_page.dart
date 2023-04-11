@@ -19,7 +19,7 @@ class SplashPage extends StatelessWidget {
     viewModel.getCurrentUser().then((value) => {
           Future.delayed(const Duration(milliseconds: 3000), () {
             if (contextStatic != null) {
-              if (value == null) {
+              if (value?.username == null) {
                 navigateReplacePage(contextStatic!, const LoginPage());
               } else {
                 navigateReplacePage(contextStatic!, HomePage(context: contextStatic!));

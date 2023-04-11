@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:minion_v1/page/home/home_page.dart';
 import 'package:minion_v1/page/security/login_view_model.dart';
+import 'package:minion_v1/page/security/sigin_page.dart';
 import 'package:minion_v1/utils/constants.dart';
 import 'package:minion_v1/utils/utils.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,7 @@ class LoginPage extends StatelessWidget {
     final viewModel = Provider.of<LoginViewModel>(contextStatic!);
     viewModel.tokenStream.listen((event) {
       if (event.accessToken != null) {
-        navigatePage(contextStatic!,HomePage(context: contextStatic!));
+        navigateReplacePage(contextStatic!, HomePage(context: contextStatic!));
       } else {
         showMaterialDialogError(contextStatic!);
       }
@@ -25,6 +26,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    contextStatic = context;
     final viewModel = Provider.of<LoginViewModel>(context);
     return Material(child: loginLayout(context, viewModel));
   }
@@ -150,7 +152,11 @@ Widget loginLayout(BuildContext context, LoginViewModel viewModel) {
         Container(
             margin: const EdgeInsets.only(top: 24),
             alignment: Alignment.topCenter,
-            child: TextButton(onPressed: () {}, child: const Text("Đăng kí")))
+            child: TextButton(
+                onPressed: () {
+                  navigatePage(context, const SigInPage());
+                },
+                child: const Text("Đăng kí")))
       ],
     ),
   ));
