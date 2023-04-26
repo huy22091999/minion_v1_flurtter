@@ -2,36 +2,42 @@
 import 'package:flutter/material.dart';
 import 'package:minion_v1/page/home/home_page.dart';
 import 'package:minion_v1/page/security/login_view_model.dart';
-import 'package:minion_v1/page/security/sigin_page.dart';
-import 'package:minion_v1/utils/constants.dart';
+import 'package:minion_v1/page/security/sign_up/sigin_page.dart';
 import 'package:minion_v1/utils/utils.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LogInPage extends StatefulWidget {
+  const LogInPage({Key? key}) : super(key: key);
 
   @override
-  StatelessElement createElement() {
-    log("create Element");
-    final viewModel = Provider.of<LoginViewModel>(contextStatic!);
+  State<LogInPage> createState() => _LogInPageState();
+}
+
+class _LogInPageState extends State<LogInPage> {
+  late final LoginViewModel viewModel;
+  @override
+  void initState() {
+    super.initState();
+  }
+  @override
+  void didChangeDependencies() {
+    viewModel = Provider.of<LoginViewModel>(context);
     viewModel.tokenStream.listen((event) {
       if (event.accessToken != null) {
-        navigateReplacePage(contextStatic!, HomePage(context: contextStatic!));
+        navigateReplacePage(context, const HomePage());
       } else {
-        showMaterialDialogError(contextStatic!);
+        showMaterialDialogError(context, "Đăng nhập thất bại",
+            "Đã sảy ra lỗi trong quá trình đăng kí");
       }
     });
-    return super.createElement();
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    contextStatic = context;
-    final viewModel = Provider.of<LoginViewModel>(context);
     return Material(child: loginLayout(context, viewModel));
   }
 }
-
 
 Widget loginLayout(BuildContext context, LoginViewModel viewModel) {
   TextEditingController username = TextEditingController();
@@ -154,7 +160,7 @@ Widget loginLayout(BuildContext context, LoginViewModel viewModel) {
             alignment: Alignment.topCenter,
             child: TextButton(
                 onPressed: () {
-                  navigatePage(context, const SigInPage());
+                  navigatePage(context, const SigUpPage());
                 },
                 child: const Text("Đăng kí")))
       ],

@@ -1,19 +1,27 @@
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:ffi';
+
 class User {
   int? id;
   String? displayName;
   String? username;
   String? password;
-  Null? confirmPassword;
+  String? confirmPassword;
   bool? changePass;
   bool? active;
-  Null? lastName;
-  Null? firstName;
-  Null? dob;
+  String? lastName;
+  String? firstName;
+  DateTime? dob;
   Null? birthPlace;
   String? email;
   bool? hasPhoto;
   List<Roles>? roles;
   bool? setPassword;
+  String? gender;
+  String? university;
+  int? year; //năm 1-5, 6- đã tốt nghiêm
+
 
   User(
       {this.id,
@@ -30,6 +38,9 @@ class User {
       this.email,
       this.hasPhoto,
       this.roles,
+      this.gender,
+      this.university,
+      this.year,
       this.setPassword});
 
   User.fromJson(Map<String, dynamic> json) {
@@ -46,35 +57,33 @@ class User {
     birthPlace = json['birthPlace'];
     email = json['email'];
     hasPhoto = json['hasPhoto'];
+    gender = json['gender'];
+    university = json['university'];
+    year = json['year'];
     if (json['roles'] != null) {
       roles = <Roles>[];
       json['roles'].forEach((v) {
-        roles!.add(new Roles.fromJson(v));
+        roles!.add(Roles.fromJson(v));
       });
     }
     setPassword = json['setPassword'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['displayName'] = this.displayName;
-    data['username'] = this.username;
-    data['password'] = this.password;
-    data['confirmPassword'] = this.confirmPassword;
-    data['changePass'] = this.changePass;
-    data['active'] = this.active;
-    data['lastName'] = this.lastName;
-    data['firstName'] = this.firstName;
-    data['dob'] = this.dob;
-    data['birthPlace'] = this.birthPlace;
-    data['email'] = this.email;
-    data['hasPhoto'] = this.hasPhoto;
-    if (this.roles != null) {
-      data['roles'] = this.roles!.map((v) => v.toJson()).toList();
-    }
-    data['setPassword'] = this.setPassword;
-    return data;
+  String toJson() {
+    String json='{'
+        '"username":"$username",'
+        '"password":"$password",'
+        '"confirmPassword":"$confirmPassword",'
+        '"lastName":"$lastName",'
+        '"firstName":"$firstName",'
+        '"gender":"$gender",'
+        '"university":"$university",'
+        '"email":"$email",'
+        '"active":$active,'
+        '"year":$year'
+        ' }';
+    log(json);
+    return json;
   }
 }
 

@@ -34,7 +34,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashPage(context: context),
+      home: const SplashPage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

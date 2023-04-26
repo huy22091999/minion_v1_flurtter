@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:minion_v1/data/model/user.dart';
 import 'package:minion_v1/page/home/home_state.dart';
 import 'package:minion_v1/page/home/home_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../setting/setting_page.dart';
+import '../tracking/tracking_page.dart';
+
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.context}) : super(key: key);
-  final BuildContext context;
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   State<HomePage> createState() => _HomePageState();
-
 }
-
 
 class _HomePageState extends State<HomePage> {
   late HomeViewModel viewModel;
   int _selectedIndex = 0;
+  @override
+  void initState() {
+
+    super.initState();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -32,8 +37,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Selected Index: $_selectedIndex'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            IndexedStack(
+              index: _selectedIndex,
+              children: const <Widget>[
+                HomeWidget(),
+                NotePage(),
+                SettingPage(),
+              ],
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -42,8 +58,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
+            icon: Icon(Icons.note_alt),
+            label: 'Note',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
@@ -54,10 +70,15 @@ class _HomePageState extends State<HomePage> {
         onTap: _onItemTapped,
       ),
     );
-
   }
+}
 
-  Widget homeLayout(BuildContext context, HomeState state) {
+class HomeWidget extends StatelessWidget {
+  const HomeWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    HomeState state = Provider.of<HomeState>(context);
     return Container(
       margin: const EdgeInsets.fromLTRB(16, 48, 16, 0),
       child: Column(
@@ -68,10 +89,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text("Xin chào!"),
-                  Text(state
-                      .getUser()
-                      ?.username ?? " NULL")
-
+                  Text(state.getUser()?.username ?? " NULL")
                 ],
               ),
             ),
@@ -113,36 +131,36 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Expanded(
                     child: Row(
-                      children: [
-                        SizedBox(
-                          width: 60,
-                          height: 60,
-                          child: Image.asset('assets/images/img.png'),
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 12),
-                            child: const Text(
-                              "Friends",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w700),
-                            ))
-                      ],
-                    )),
+                  children: [
+                    SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: Image.asset('assets/images/img.png'),
+                    ),
+                    Container(
+                        margin: const EdgeInsets.only(left: 12),
+                        child: const Text(
+                          "Friends",
+                          style: TextStyle(
+                              fontSize: 14, fontWeight: FontWeight.w700),
+                        ))
+                  ],
+                )),
                 Expanded(
                     child: Row(
-                      children: [
-                        SizedBox(
-                          width: 60,
-                          height: 60,
-                          child: Image.asset('assets/images/img.png'),
-                        ),
-                        Container(
-                            margin: const EdgeInsets.only(left: 12),
-                            child: const Text("Note",
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w700)))
-                      ],
-                    ))
+                  children: [
+                    SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: Image.asset('assets/images/img.png'),
+                    ),
+                    Container(
+                        margin: const EdgeInsets.only(left: 12),
+                        child: const Text("Note",
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w700)))
+                  ],
+                ))
               ],
             ),
           )

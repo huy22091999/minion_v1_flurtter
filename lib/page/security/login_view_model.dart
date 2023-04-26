@@ -26,8 +26,6 @@ class LoginViewModel{
   Stream<TokenReponsive> get tokenStream => _tokenSubject.stream;
   Sink<TokenReponsive> get _tokenSink => _tokenSubject.sink;
 
-
-
   Future<User?> getCurrentUser() async {
     User? user;
     await loginRepository.fetchUser().then((value) => {

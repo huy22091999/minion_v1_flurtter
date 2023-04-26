@@ -10,7 +10,7 @@ import '../model/token_reponsive.dart';
 import '../model/user.dart';
 import '../model/user_credential.dart';
 
-const BASE_URL = "http://mita.oceantech.com.vn/mita";
+const BASE_URL = "http://192.168.2.147:8022/mita";
 const TOKEN = "token";
 
 class LoginRepository {
@@ -57,7 +57,6 @@ class LoginRepository {
 
   Future<TokenReponsive> fetchToken(String username, String password) async {
     var uri = Uri.parse("$BASE_URL/oauth/token");
-
     var user = UserCredential(
         clinetId: "core_client",
         grantType: "password",

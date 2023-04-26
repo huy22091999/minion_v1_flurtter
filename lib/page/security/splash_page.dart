@@ -7,35 +7,36 @@ import 'package:provider/provider.dart';
 
 import '../../utils/constants.dart';
 
-class SplashPage extends StatelessWidget {
-  const SplashPage({super.key, required this.context});
-
-  final BuildContext context;
+class SplashPage extends StatefulWidget {
+  const SplashPage({Key? key}) : super(key: key);
 
   @override
-  StatelessElement createElement() {
-    log("createElement");
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+
+    super.initState();
+  }
+  @override
+  void didChangeDependencies() {
     final viewModel = Provider.of<LoginViewModel>(context);
     viewModel.getCurrentUser().then((value) => {
-          Future.delayed(const Duration(milliseconds: 3000), () {
-            if (contextStatic != null) {
-              if (value?.username == null) {
-                navigateReplacePage(contextStatic!, const LoginPage());
-              } else {
-                navigateReplacePage(contextStatic!, HomePage(context: contextStatic!));
-              }
-            } else {
-              log("function build not call yet?");
-            }
-          })
-        });
-
-    return super.createElement();
+      Future.delayed(const Duration(milliseconds: 3000), () {
+        if (value?.username == null) {
+          navigateReplacePage(context, const LogInPage());
+        } else {
+          navigateReplacePage(context, const HomePage());
+        }
+      })
+    });
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    contextStatic = context;
     return Container(
       color: const Color.fromARGB(255, 255, 255, 255),
       child: Column(
@@ -61,4 +62,5 @@ class SplashPage extends StatelessWidget {
       ),
     );
   }
+
 }

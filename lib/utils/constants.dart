@@ -1,6 +1,9 @@
-
-
-import 'package:flutter/cupertino.dart';
-
-BuildContext? contextStatic;
-
+const String year1 = "Sinh viên năm 1";
+const String year2 = "Sinh viên năm 2";
+const String year3 = "Sinh viên năm 3";
+const String year4 = "Sinh viên năm 4";
+const String yearEnd = "Sinh viên năm cuối";
+const String nearFinish = "Sắp tốt nghiệp";
+const String finish = "Đã tốt nghiệp";
+const String genderM = "Nam";
+const String genderL = "Nữ";

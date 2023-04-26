@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void showMaterialDialogError(BuildContext context) {
+void showMaterialDialogError(BuildContext context, String title, String content) {
   showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Đăng nhập thất bại'),
-          content: const Text('Đã xảy ra lỗi trong quá trình đăng nhập.'),
+          title: Text(title),
+          content: Text(content),
           actions: <Widget>[
             TextButton(
               onPressed: () {
